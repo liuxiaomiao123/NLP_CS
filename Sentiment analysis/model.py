@@ -21,8 +21,7 @@ class MovieLSTM(Module):
         self.drop = Dropout(p=self.dropout_perc)
         self.lstm = LSTM(
             input_size=self.dim_embed, hidden_size=self.dim_hidden, 
-            num_layers=self.num_hidden_layers, batch_first=self.batch_first,
-            dropout=self.dropout_perc
+            num_layers=self.num_hidden_layers, batch_first=self.batch_first
         )        
         self.linear_mapping = Linear(in_features=self.dim_hidden, out_features=1)
         self.activation = Sigmoid()
@@ -30,15 +29,14 @@ class MovieLSTM(Module):
 
     def forward(self, inputs, hidden_states):
         embeddings = self.embedding_lookup(inputs)
-        output, hidden_states = self.lstm(embeddings, hidden_states)
-        output = output.contiguous().view(-1, self.dim_hidden)
+        output = output.contiguous()
         activations = self.activation(
             self.linear_mapping(
                 self.drop(
                     output
                 )
             )
-        ).view(inputs.size(0), -1)[:, -1]
+        ).view(inputs.size(0), -1)
         return activations, hidden_states
     
     
