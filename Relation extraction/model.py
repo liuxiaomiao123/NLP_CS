@@ -3,8 +3,6 @@
 Created on Mon Oct 28 00:54:00 2024
 
 @author: liangyingliu
-
-note: I wrote this model by referring to the script on https://github.com/monologg/R-BERT/blob/master/model.py
 """
 
 #%%
@@ -67,4 +65,5 @@ class RobustBERT(BertPreTrainedModel):
             
         return out  
         
+
         
